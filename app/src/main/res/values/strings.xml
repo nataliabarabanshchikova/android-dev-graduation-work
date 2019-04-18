@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">graduationwork</string>
+    <string name="app_name">Trello client</string>
+    <string name="title_activity_main">Boards</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">nataliabarabanschikova</string>
+    <string name="nav_header_subtitle">natalia.barabanschikova@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_add_board">Add new board</string>
 </resources>
