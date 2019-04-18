@@ -1,15 +1,18 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +28,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        val testBoardData = createTestData()
+        val boardList = findViewById<RecyclerView>(R.id.boardList)
+        boardList.layoutManager = LinearLayoutManager(this)
+        boardList.adapter = BoardAdapter(testBoardData, {board : Board -> boardItemClicked(board)})
+    }
+
+    private fun createTestData() : List<Board> {
+        val boardList = ArrayList<Board>()
+        boardList.add(Board(1, "Board #1", "Description for board #1", "2019-04-18"))
+        boardList.add(Board(2, "Board #2", "Description for board #2", "2019-04-18"))
+        boardList.add(Board(3, "Board #3", "Description for board #3", "2019-04-18"))
+        boardList.add(Board(4, "Board #4", "Description for board #4", "2019-04-18"))
+        boardList.add(Board(5, "Board #5", "Description for board #5", "2019-04-18"))
+        return boardList
     }
 
     override fun onBackPressed() {
@@ -36,15 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_settings -> return true
             else -> return super.onOptionsItemSelected(item)
@@ -52,7 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_boards -> {
             }
