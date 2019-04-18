@@ -45,6 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return boardList
     }
 
+    private fun boardItemClicked(board: Board) {
+        val intent = Intent(this, BoardDetailsActivity::class.java)
+        intent.putExtra("boardName", board.name)
+        intent.putExtra("boardDesc", board.desc)
+        intent.putExtra("boardCreated", board.created)
+        startActivity(intent)
+    }
+
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)

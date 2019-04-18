@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".BoardDetailsActivity"
+                  android:label="@string/title_activity_board_details"/>
         <activity android:name=".AddBoardActivity"
                   android:label="@string/title_activity_add_board"/>
     </application>

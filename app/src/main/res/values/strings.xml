@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Trello client</string>
     <string name="title_activity_main">Boards</string>
+    <string name="title_activity_board_details">Board</string>
     <string name="title_activity_add_board">Add new board</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
