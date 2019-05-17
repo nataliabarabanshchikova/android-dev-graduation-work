@@ -10,11 +10,25 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.util.*
+import kotlin.coroutines.*
+import kotlinx.coroutines.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CoroutineScope  {
+
+    val adapter = BoardAdapter()
+
+    private val httpClient = OkHttpClient.Builder().build()
+
+    private val rootJob = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + rootJob
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,27 +43,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        val testBoardData = createTestData()
+        loadData()
         val boardList = findViewById<RecyclerView>(R.id.boardList)
         boardList.layoutManager = LinearLayoutManager(this)
-        boardList.adapter = BoardAdapter(testBoardData, {board : Board -> boardItemClicked(board)})
+        boardList.adapter = adapter
     }
 
-    private fun createTestData() : List<Board> {
-        val boardList = ArrayList<Board>()
-        boardList.add(Board(1, "Board #1", "Description for board #1", "2019-04-18"))
-        boardList.add(Board(2, "Board #2", "Description for board #2", "2019-04-18"))
-        boardList.add(Board(3, "Board #3", "Description for board #3", "2019-04-18"))
-        boardList.add(Board(4, "Board #4", "Description for board #4", "2019-04-18"))
-        boardList.add(Board(5, "Board #5", "Description for board #5", "2019-04-18"))
-        return boardList
+    private fun loadData() = launch {
+        val request = Request.Builder()
+            .url("https://api.trello.com/1/members/nataliabarabanschikova/boards" +
+                     "?filter=all&fields=all&lists=none&memberships=none&organization=false&organization_fields=name%2CdisplayName&" +
+                     "key=315325026f4dcdd9fa31100def752a22&" +
+                     "token=8a6d287dfa9d6e8709f2423aba6c3cd6d29e576c83fa86582933afd699cfb794")
+            .build()
+        val response: String = withContext(Dispatchers.IO) {
+            httpClient.newCall(request).execute().body()!!.string()
+        }
+        val type = object : TypeToken<ArrayList<Board>>() {}
+        val boards = Gson().fromJson<ArrayList<Board>>(response, type.type)
+        adapter.data.clear()
+        adapter.data.addAll(boards)
+        adapter.notifyDataSetChanged()
     }
 
     private fun boardItemClicked(board: Board) {
         val intent = Intent(this, BoardDetailsActivity::class.java)
-        intent.putExtra("boardName", board.name)
-        intent.putExtra("boardDesc", board.desc)
-        intent.putExtra("boardCreated", board.created)
+        intent.putExtra("id", board.id)
         startActivity(intent)
     }
 
@@ -87,5 +106,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onDestroy() {
+        rootJob.cancel()
+        super.onDestroy()
     }
 }
