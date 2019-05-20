@@ -22,7 +22,7 @@ import okhttp3.Request
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CoroutineScope  {
 
-    val adapter = BoardAdapter()
+    val adapter = BoardAdapter({board : Board -> boardItemClicked(board)})
 
     private val httpClient = OkHttpClient.Builder().build()
 
