@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:padding="16dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <TextView
-            android:layout_width="wrap_content"
+    <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/board_name_label"
-            android:textSize="14sp"/>
-    <TextView
-            android:id="@+id/boardName"
-            android:textSize="18sp"
-            android:paddingBottom="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:background="@color/colorPrimary"
+            app:tabTextColor="#fff"
+            app:tabBackground="?attr/selectableItemBackground"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabMode="scrollable" />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/board_desc_label"
-            android:textSize="14sp"/>
-    <TextView
-            android:id="@+id/boardDesc"
-            android:textSize="18sp"
-            android:paddingBottom="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/board_created_label"
-            android:textSize="14sp"/>
-    <TextView
-            android:id="@+id/boardCreated"
-            android:textSize="18sp"
-            android:paddingBottom="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/board_name_label"-->
+            <!--android:textSize="14sp"/>-->
+    <!--<TextView-->
+            <!--android:id="@+id/boardName"-->
+            <!--android:textSize="18sp"-->
+            <!--android:paddingBottom="24dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+    <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/board_desc_label"-->
+            <!--android:textSize="14sp"/>-->
+    <!--<TextView-->
+            <!--android:id="@+id/boardDesc"-->
+            <!--android:textSize="18sp"-->
+            <!--android:paddingBottom="24dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+    <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/board_created_label"-->
+            <!--android:textSize="14sp"/>-->
+    <!--<TextView-->
+            <!--android:id="@+id/boardCreated"-->
+            <!--android:textSize="18sp"-->
+            <!--android:paddingBottom="24dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
 
 </LinearLayout>
