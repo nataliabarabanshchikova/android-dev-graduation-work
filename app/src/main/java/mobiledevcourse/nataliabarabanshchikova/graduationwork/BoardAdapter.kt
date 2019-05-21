@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import java.text.SimpleDateFormat
 
 
 class BoardAdapter (val clickListener: (Board) -> Unit): RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
@@ -22,7 +23,9 @@ class BoardAdapter (val clickListener: (Board) -> Unit): RecyclerView.Adapter<Bo
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.itemView.findViewById<TextView>(R.id.boardName).text = data[p1].name
         p0.itemView.findViewById<TextView>(R.id.boardDesc).text = data[p1].desc
-        p0.itemView.findViewById<TextView>(R.id.boardCreated).text = data[p1].dateLastActivity.toString()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm");
+        val date = dateFormat.format(data[p1].dateLastActivity)
+        p0.itemView.findViewById<TextView>(R.id.boardCreated).text = date
         (p0 as ViewHolder).bind(data[p1], clickListener)
     }
 

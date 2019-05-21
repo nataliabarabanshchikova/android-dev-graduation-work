@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:padding="16dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingTop="8dp"
+              android:paddingBottom="8dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
     <TextView
             android:id="@+id/boardName"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textColor="?android:attr/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     <TextView
             android:id="@+id/boardDesc"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     <TextView
             android:id="@+id/boardCreated"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="2dp"
+            android:text='fkdkj'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

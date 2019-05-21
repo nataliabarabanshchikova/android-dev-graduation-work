@@ -14,7 +14,9 @@
             app:tabBackground="?attr/selectableItemBackground"
             app:tabGravity="fill"
             app:tabSelectedTextColor="@android:color/white"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
