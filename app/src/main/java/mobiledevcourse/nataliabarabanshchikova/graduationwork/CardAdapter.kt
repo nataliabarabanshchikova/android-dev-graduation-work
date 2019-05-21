@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 
-class CardAdapter : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+class CardAdapter (val clickListener: (Card) -> Unit) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
     val data = mutableListOf<Card>()
 
@@ -22,8 +22,13 @@ class CardAdapter : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.itemView.findViewById<TextView>(R.id.cardName).text = data[p1].name
         p0.itemView.findViewById<TextView>(R.id.cardDesc).text = data[p1].desc
+        (p0 as CardAdapter.ViewHolder).bind(data[p1], clickListener)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(card: Card, clickListener: (Card) -> Unit) {
+            itemView.setOnClickListener { clickListener(card)}
+        }
+    }
 
 }

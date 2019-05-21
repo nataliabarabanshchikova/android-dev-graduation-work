@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Trello client</string>
     <string name="title_activity_main">Boards</string>
-    <string name="title_activity_board_details">Board</string>
+    <string name="title_activity_board_details">Cards</string>
+    <string name="title_activity_card_details">Card detail</string>
     <string name="title_activity_add_board">Add new board</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,4 +13,7 @@
     <string name="board_name_label">Name</string>
     <string name="board_desc_label">Description</string>
     <string name="board_created_label">Created</string>
+    <string name="card_name_label">Name</string>
+    <string name="card_desc_label">Description</string>
+    <string name="card_img_label">Attachments</string>
 </resources>

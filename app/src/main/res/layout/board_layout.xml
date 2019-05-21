@@ -28,7 +28,6 @@
             android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginTop="2dp"
-            android:text='fkdkj'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

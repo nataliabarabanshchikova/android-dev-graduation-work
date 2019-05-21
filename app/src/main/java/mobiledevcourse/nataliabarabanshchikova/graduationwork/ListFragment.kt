@@ -1,5 +1,6 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -18,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
 
 class PageFragment : Fragment(), CoroutineScope {
 
-    val adapter = CardAdapter()
+    val adapter = CardAdapter({card : Card -> cardItemClicked(card)})
 
     private val httpClient = OkHttpClient.Builder().build()
 
@@ -37,6 +38,7 @@ class PageFragment : Fragment(), CoroutineScope {
 
         return view
     }
+
     companion object {
         val LIST_ID = "LIST_ID"
         fun newInstance(listId: String): PageFragment {
@@ -62,5 +64,11 @@ class PageFragment : Fragment(), CoroutineScope {
         adapter.data.clear()
         adapter.data.addAll(cards)
         adapter.notifyDataSetChanged()
+    }
+
+    private fun cardItemClicked(card: Card) {
+        val intent = Intent(context, CardActivity::class.java)
+        intent.putExtra("id", card.id)
+        startActivity(intent)
     }
 }
