@@ -42,12 +42,15 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun loadData(cardId: String) = launch {
+        val apiKey = MyApplication.prefs!!.apiKey
+        val apiToken = MyApplication.prefs!!.apiToken
         val request = Request.Builder()
-            .url("https://api.trello.com/1/cards/$cardId?attachments=true&attachment_fields=all&" +
-                    "members=false&membersVoted=false&checkItemStates=false&checklists=none&checklist_fields=all&b" +
-                    "oard=false&list=false&pluginData=false&stickers=false&sticker_fields=all&customFieldItems=false&" +
-                    "key=315325026f4dcdd9fa31100def752a22&" +
-                    "token=8a6d287dfa9d6e8709f2423aba6c3cd6d29e576c83fa86582933afd699cfb794")
+            .url("https://api.trello.com/1/cards/$cardId?" +
+                    "attachments=true&attachment_fields=all&members=false&membersVoted=false&" +
+                    "checkItemStates=false&checklists=none&checklist_fields=all&board=false&list=false" +
+                    "&pluginData=false&stickers=false&sticker_fields=all&customFieldItems=false&" +
+                    "key=$apiKey&" +
+                    "token=$apiToken")
             .build()
         val response: String = withContext(Dispatchers.IO) {
             httpClient.newCall(request).execute().body()!!.string()

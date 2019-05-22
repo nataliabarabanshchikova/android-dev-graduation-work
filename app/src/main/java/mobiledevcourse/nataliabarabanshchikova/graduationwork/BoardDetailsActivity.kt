@@ -52,10 +52,13 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun loadData(boardId: String) = launch {
+        val apiKey = MyApplication.prefs!!.apiKey
+        val apiToken = MyApplication.prefs!!.apiToken
         val request = Request.Builder()
-            .url("https://api.trello.com/1/boards/$boardId/lists?cards=none&card_fields=all&filter=open&fields=all&" +
-                    "key=315325026f4dcdd9fa31100def752a22&" +
-                    "token=8a6d287dfa9d6e8709f2423aba6c3cd6d29e576c83fa86582933afd699cfb794")
+            .url("https://api.trello.com/1/boards/$boardId/lists?" +
+                    "cards=none&card_fields=all&filter=open&fields=all&" +
+                    "key=$apiKey&" +
+                    "token=$apiToken")
             .build()
         val response: String = withContext(Dispatchers.IO) {
             httpClient.newCall(request).execute().body()!!.string()
