@@ -6,4 +6,4 @@ Version 0.1.0
 
 ### Presentation ###
 
-pass
+[Presentation file](https://github.com/nataliabarabanshchikova/android-dev-graduation-work/blob/master/Trello%20Android%20App.pdf).
