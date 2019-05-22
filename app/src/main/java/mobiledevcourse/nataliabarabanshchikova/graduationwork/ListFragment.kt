@@ -21,6 +21,7 @@ import kotlin.coroutines.CoroutineContext
 class PageFragment : Fragment(), CoroutineScope {
 
     val adapter = CardAdapter({card : Card -> cardItemClicked(card)})
+    private var allCards: ArrayList<Card> = ArrayList()
 
     private val httpClient = OkHttpClient.Builder().build()
 
@@ -39,10 +40,16 @@ class PageFragment : Fragment(), CoroutineScope {
             startActivity(intent)
         }
 
-        loadData(listId)
         val cardList = view.findViewById<RecyclerView>(R.id.cardList)
         cardList.layoutManager = LinearLayoutManager(context)
         cardList.adapter = adapter
+
+        if(savedInstanceState == null || !savedInstanceState.containsKey("allCards")) {
+            loadData(listId)
+        } else {
+            allCards = savedInstanceState.get("allCards") as ArrayList<Card>
+            updateUI()
+        }
 
         return view
     }
@@ -62,18 +69,26 @@ class PageFragment : Fragment(), CoroutineScope {
         val apiKey = MyApplication.prefs!!.apiKey
         val apiToken = MyApplication.prefs!!.apiToken
         val request = Request.Builder()
-            .url("https://api.trello.com/1/lists/$listId/cards?" +
-                    "cards=none&card_fields=all&filter=open&fields=all&" +
-                    "key=$apiKey&" +
-                    "token=$apiToken")
+            .url(
+                "https://api.trello.com/1/lists/$listId/cards?" +
+                        "cards=none&card_fields=all&filter=open&fields=all&" +
+                        "key=$apiKey&" +
+                        "token=$apiToken"
+            )
             .build()
         val response: String = withContext(Dispatchers.IO) {
             httpClient.newCall(request).execute().body()!!.string()
         }
         val type = object : TypeToken<ArrayList<Card>>() {}
         val cards = Gson().fromJson<ArrayList<Card>>(response, type.type)
+        allCards = ArrayList(cards)
+        updateUI()
+
+    }
+
+    private fun updateUI() {
         adapter.data.clear()
-        adapter.data.addAll(cards)
+        adapter.data.addAll(allCards)
         adapter.notifyDataSetChanged()
     }
 
@@ -81,5 +96,10 @@ class PageFragment : Fragment(), CoroutineScope {
         val intent = Intent(context, CardActivity::class.java)
         intent.putExtra("id", card.id)
         startActivity(intent)
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putParcelableArrayList("allCards", allCards)
     }
 }

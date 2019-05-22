@@ -52,9 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             loadData()
         } else {
             allBoards = savedInstanceState.get("allBoards") as ArrayList<Board>
-            adapter.data.clear()
-            adapter.data.addAll(allBoards)
-            adapter.notifyDataSetChanged()
+            updateUI()
         }
 
     }
@@ -76,6 +74,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         allBoards = ArrayList(boards)
 //        openedBoards = ArrayList(boards.filter { s -> s.closed == false })
 //        closedBoards = ArrayList(boards.filter { s -> s.closed == true })
+        updateUI()
+    }
+
+    private fun updateUI() {
         adapter.data.clear()
         adapter.data.addAll(allBoards)
         adapter.notifyDataSetChanged()

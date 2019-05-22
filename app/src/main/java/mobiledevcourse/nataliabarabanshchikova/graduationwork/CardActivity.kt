@@ -17,6 +17,7 @@ import kotlin.coroutines.CoroutineContext
 
 class CardActivity : AppCompatActivity(), CoroutineScope {
 
+    private var currCard: CardDetail ?= null
     private val httpClient = OkHttpClient.Builder().build()
 
     private val rootJob = Job()
@@ -32,6 +33,13 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
 
         val intent = getIntent()
         val cardId = if (intent.hasExtra("id")) intent.getStringExtra("id") else ""
+
+        if(savedInstanceState == null || !savedInstanceState.containsKey("currCard")) {
+            loadData(cardId)
+        } else {
+            currCard = savedInstanceState.get("currCard") as CardDetail
+            updateUI()
+        }
 
         loadData(cardId)
     }
@@ -57,26 +65,32 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
         }
         val type = object : TypeToken<CardDetail>() {}
         val card = Gson().fromJson<CardDetail>(response, type.type)
-        updateUI(card)
+        currCard = card
+        updateUI()
     }
 
-    private fun updateUI(card: CardDetail) {
-        findViewById<TextView>(R.id.cardName).text = card.name
+    private fun updateUI() {
+        findViewById<TextView>(R.id.cardName).text = currCard!!.name
 
-        if (card.desc.isEmpty()) {
+        if (currCard!!.desc.isEmpty()) {
             findViewById<TextView>(R.id.cardDesc).visibility = View.GONE
             findViewById<TextView>(R.id.cardDescLabel).visibility = View.GONE
         } else
-            findViewById<TextView>(R.id.cardDesc).text = card.desc
+            findViewById<TextView>(R.id.cardDesc).text = currCard!!.desc
 
-        if (!card.attachments.isEmpty()) {
+        if (!currCard!!.attachments.isEmpty()) {
             val imageView = ImageView(this)
-            Glide.with(this).load(card.attachments[0].url).into(imageView)
+            Glide.with(this).load(currCard!!.attachments[0].url).into(imageView)
             findViewById<LinearLayout>(R.id.cardImage).addView(imageView)
         } else {
             findViewById<LinearLayout>(R.id.cardImage).visibility = View.GONE;
             findViewById<TextView>(R.id.cardImageLabel).visibility = View.GONE;
         }
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putParcelable("currCard", currCard)
     }
 
     override fun onDestroy() {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.*
 class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
 
     private val pageAdapter = PageAdapter(supportFragmentManager)
+    private var allLists: ArrayList<List> = ArrayList()
 
     private val httpClient = OkHttpClient.Builder().build()
 
@@ -43,7 +44,12 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
         view_pager.adapter = pageAdapter
         tabs.setupWithViewPager(view_pager)
 
-        loadData(boardId)
+        if(savedInstanceState == null || !savedInstanceState.containsKey("allLists")) {
+            loadData(boardId)
+        } else {
+            allLists = savedInstanceState.get("allLists") as ArrayList<List>
+            updateUI()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -55,20 +61,32 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
         val apiKey = MyApplication.prefs!!.apiKey
         val apiToken = MyApplication.prefs!!.apiToken
         val request = Request.Builder()
-            .url("https://api.trello.com/1/boards/$boardId/lists?" +
-                    "cards=none&card_fields=all&filter=open&fields=all&" +
-                    "key=$apiKey&" +
-                    "token=$apiToken")
+            .url(
+                "https://api.trello.com/1/boards/$boardId/lists?" +
+                        "cards=none&card_fields=all&filter=open&fields=all&" +
+                        "key=$apiKey&" +
+                        "token=$apiToken"
+            )
             .build()
         val response: String = withContext(Dispatchers.IO) {
             httpClient.newCall(request).execute().body()!!.string()
         }
         val type = object : TypeToken<ArrayList<List>>() {}
         val lists = Gson().fromJson<ArrayList<List>>(response, type.type)
-        lists.forEach({
+        allLists = ArrayList(lists)
+        updateUI()
+    }
+
+    private fun updateUI() {
+        allLists.forEach({
             pageAdapter.add(PageFragment.newInstance(it.id), "${it.name}")
         })
         pageAdapter.notifyDataSetChanged()
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putParcelableArrayList("allLists", allLists)
     }
 
     override fun onDestroy() {
