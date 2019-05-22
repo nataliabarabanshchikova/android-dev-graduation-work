@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:paddingTop="8dp"
-              android:paddingBottom="8dp"
+              android:padding="16dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
     <TextView
+            android:id="@+id/cardNameLabel"
             android:text="@string/card_name_label"
             android:textSize="12sp"
             android:textColor="?android:attr/textColorSecondary"
@@ -25,6 +23,7 @@
             android:paddingBottom="24dp"/>
 
     <TextView
+            android:id="@+id/cardDescLabel"
             android:text="@string/card_desc_label"
             android:textSize="12sp"
             android:textColor="?android:attr/textColorSecondary"
@@ -41,6 +40,7 @@
             android:paddingBottom="24dp"/>
 
     <TextView
+            android:id="@+id/cardImageLabel"
             android:text="@string/card_img_label"
             android:textSize="12sp"
             android:textColor="?android:attr/textColorSecondary"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"/>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
                   tools:context="com.appsdeveloperblog.kotlinexample4.LoadGifFromURLUsingGlide"
                   xmlns:tools="http://schemas.android.com/tools"
                   android:id="@+id/cardImage"

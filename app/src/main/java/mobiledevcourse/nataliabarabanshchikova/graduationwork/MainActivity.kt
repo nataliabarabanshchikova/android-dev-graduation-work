@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun boardItemClicked(board: Board) {
         val intent = Intent(this, BoardDetailsActivity::class.java)
-        intent.putExtra("id", board.id)
+        intent.putExtra("boardId", board.id)
+        intent.putExtra("boardName", board.name)
         startActivity(intent)
     }
 

@@ -30,7 +30,13 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_board_detail)
 
         val intent = getIntent()
-        val boardId = if (intent.hasExtra("id")) intent.getStringExtra("id") else ""
+        val boardId = if (intent.hasExtra("boardId")) intent.getStringExtra("boardId") else ""
+        val boardName = if (intent.hasExtra("boardName")) intent.getStringExtra("boardName") else ""
+
+        val actionbar = supportActionBar
+        supportActionBar!!.title = boardName
+        supportActionBar!!.setElevation(0f)
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
 
         val view_pager = findViewById<ViewPager>(R.id.view_pager)
         val tabs = findViewById<TabLayout>(R.id.tabs)
@@ -38,6 +44,11 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
         tabs.setupWithViewPager(view_pager)
 
         loadData(boardId)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun loadData(boardId: String) = launch {

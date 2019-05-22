@@ -2,6 +2,7 @@ package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -26,10 +27,18 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail)
 
+        val actionbar = supportActionBar
+        actionbar!!.setDisplayHomeAsUpEnabled(true)
+
         val intent = getIntent()
         val cardId = if (intent.hasExtra("id")) intent.getStringExtra("id") else ""
 
         loadData(cardId)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun loadData(cardId: String) = launch {
@@ -50,12 +59,20 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
 
     private fun updateUI(card: CardDetail) {
         findViewById<TextView>(R.id.cardName).text = card.name
-        findViewById<TextView>(R.id.cardDesc).text = card.desc
+
+        if (card.desc.isEmpty()) {
+            findViewById<TextView>(R.id.cardDesc).visibility = View.GONE
+            findViewById<TextView>(R.id.cardDescLabel).visibility = View.GONE
+        } else
+            findViewById<TextView>(R.id.cardDesc).text = card.desc
+
         if (!card.attachments.isEmpty()) {
-            val linearLayout = findViewById<LinearLayout>(R.id.cardImage)
             val imageView = ImageView(this)
             Glide.with(this).load(card.attachments[0].url).into(imageView)
-            linearLayout.addView(imageView)
+            findViewById<LinearLayout>(R.id.cardImage).addView(imageView)
+        } else {
+            findViewById<LinearLayout>(R.id.cardImage).visibility = View.GONE;
+            findViewById<TextView>(R.id.cardImageLabel).visibility = View.GONE;
         }
     }
 
