@@ -19,11 +19,13 @@ import kotlin.coroutines.*
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CoroutineScope  {
 
     val adapter = BoardAdapter({board : Board -> boardItemClicked(board)})
-
+    private var openedBoards: ArrayList<Board> = ArrayList()
+    private var closedBoards: ArrayList<Board> = ArrayList()
     private val httpClient = OkHttpClient.Builder().build()
 
     private val rootJob = Job()
@@ -63,8 +65,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val type = object : TypeToken<ArrayList<Board>>() {}
         val boards = Gson().fromJson<ArrayList<Board>>(response, type.type)
+        openedBoards = ArrayList(boards.filter { s -> s.closed == false })
+        closedBoards = ArrayList(boards.filter { s -> s.closed == true })
         adapter.data.clear()
-        adapter.data.addAll(boards)
+        adapter.data.addAll(openedBoards)
         adapter.notifyDataSetChanged()
     }
 
@@ -111,9 +115,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+//  TODO https://stackoverflow.com/questions/12503836/how-to-save-custom-arraylist-on-android-screen-rotate/12503875
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-//        savedInstanceState.putParcelableArrayList("boards", boards)
+//        println("onSaveInstanceState 1")
+//        savedInstanceState.putSerializable("openedBoards", openedBoards)
+//        savedInstanceState.putSerializable("closedBoards", closedBoards)
+//        println("onSaveInstanceState 2")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
