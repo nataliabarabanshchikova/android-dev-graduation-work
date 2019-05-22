@@ -14,7 +14,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.util.*
 import kotlin.coroutines.*
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
@@ -24,6 +23,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CoroutineScope  {
 
     val adapter = BoardAdapter({board : Board -> boardItemClicked(board)})
+    private var allBoards: ArrayList<Board> = ArrayList()
     private var openedBoards: ArrayList<Board> = ArrayList()
     private var closedBoards: ArrayList<Board> = ArrayList()
     private val httpClient = OkHttpClient.Builder().build()
@@ -45,10 +45,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        loadData()
         val boardList = findViewById<RecyclerView>(R.id.boardList)
         boardList.layoutManager = LinearLayoutManager(this)
         boardList.adapter = adapter
+        if(savedInstanceState == null || !savedInstanceState.containsKey("allBoards")) {
+            loadData()
+        } else {
+            allBoards = savedInstanceState.get("allBoards") as ArrayList<Board>
+            adapter.data.clear()
+            adapter.data.addAll(allBoards)
+            adapter.notifyDataSetChanged()
+        }
+
     }
 
     private fun loadData() = launch {
@@ -65,10 +73,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val type = object : TypeToken<ArrayList<Board>>() {}
         val boards = Gson().fromJson<ArrayList<Board>>(response, type.type)
-        openedBoards = ArrayList(boards.filter { s -> s.closed == false })
-        closedBoards = ArrayList(boards.filter { s -> s.closed == true })
+        allBoards = ArrayList(boards)
+//        openedBoards = ArrayList(boards.filter { s -> s.closed == false })
+//        closedBoards = ArrayList(boards.filter { s -> s.closed == true })
         adapter.data.clear()
-        adapter.data.addAll(openedBoards)
+        adapter.data.addAll(allBoards)
         adapter.notifyDataSetChanged()
     }
 
@@ -115,17 +124,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-//  TODO https://stackoverflow.com/questions/12503836/how-to-save-custom-arraylist-on-android-screen-rotate/12503875
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
-//        println("onSaveInstanceState 1")
-//        savedInstanceState.putSerializable("openedBoards", openedBoards)
-//        savedInstanceState.putSerializable("closedBoards", closedBoards)
-//        println("onSaveInstanceState 2")
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.putParcelableArrayList("allBoards", allBoards)
     }
 
     override fun onDestroy() {
