@@ -16,4 +16,6 @@
     <string name="card_name_label">Name</string>
     <string name="card_desc_label">Description</string>
     <string name="card_img_label">Attachments</string>
+    <string name="title_activity_add_card">Add new card</string>
+    <string name="add_card_btn">Add card</string>
 </resources>

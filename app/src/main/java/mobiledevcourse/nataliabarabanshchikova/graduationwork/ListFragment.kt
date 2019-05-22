@@ -2,6 +2,7 @@ package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -30,6 +31,13 @@ class PageFragment : Fragment(), CoroutineScope {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lists, container, false)
         val listId = getArguments()!!.getString(LIST_ID)
+
+        val btnNewCard = view.findViewById<FloatingActionButton>(R.id.fab)
+        btnNewCard.setOnClickListener {
+            val intent = Intent(context, AddCardActivity::class.java)
+            intent.putExtra("listId", listId)
+            startActivity(intent)
+        }
 
         loadData(listId)
         val cardList = view.findViewById<RecyclerView>(R.id.cardList)

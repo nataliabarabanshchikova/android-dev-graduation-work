@@ -28,6 +28,8 @@
                   android:label="@string/title_activity_add_board"/>
         <activity android:name=".CardActivity"
                   android:label="@string/title_activity_card_details"/>
+        <activity android:name=".AddCardActivity"
+                  android:label="@string/title_activity_add_card"/>
     </application>
 
 </manifest>
