@@ -15,6 +15,7 @@ import okhttp3.Request
 import java.util.ArrayList
 import kotlin.coroutines.CoroutineContext
 
+
 class CardActivity : AppCompatActivity(), CoroutineScope {
 
     private var currCard: CardDetail ?= null
@@ -79,11 +80,11 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
             findViewById<TextView>(R.id.cardDesc).text = currCard!!.desc
 
         if (!currCard!!.attachments.isEmpty()) {
-            val imageView = ImageView(this)
-            Glide.with(this).load(currCard!!.attachments[0].url).into(imageView)
-            findViewById<LinearLayout>(R.id.cardImage).addView(imageView)
+            val imageView =findViewById<ImageView>(R.id.cardImageView)
+            val imageUrl = currCard!!.attachments[0].url
+            Glide.with(this).load(imageUrl).into(imageView)
         } else {
-            findViewById<LinearLayout>(R.id.cardImage).visibility = View.GONE;
+            findViewById<ImageView>(R.id.cardImageView).visibility = View.GONE;
             findViewById<TextView>(R.id.cardImageLabel).visibility = View.GONE;
         }
     }

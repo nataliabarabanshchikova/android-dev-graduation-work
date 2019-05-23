@@ -1,60 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
-              android:padding="16dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/cardNameLabel"
-            android:text="@string/card_name_label"
-            android:textSize="12sp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/cardName"
-            android:textSize="18sp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="24dp"/>
+        <LinearLayout
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/cardDescLabel"
-            android:text="@string/card_desc_label"
-            android:textSize="12sp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp"/>
+            <TextView
+                    android:id="@+id/cardNameLabel"
+                    android:text="@string/card_name_label"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"/>
 
-    <TextView
-            android:id="@+id/cardDesc"
-            android:textSize="18sp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="24dp"/>
+            <TextView
+                    android:id="@+id/cardName"
+                    android:textSize="18sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="24dp"/>
 
-    <TextView
-            android:id="@+id/cardImageLabel"
-            android:text="@string/card_img_label"
-            android:textSize="12sp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="4dp"/>
+            <TextView
+                    android:id="@+id/cardDescLabel"
+                    android:text="@string/card_desc_label"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"/>
 
-    <LinearLayout
-                  tools:context="com.appsdeveloperblog.kotlinexample4.LoadGifFromURLUsingGlide"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:id="@+id/cardImage"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
-    </LinearLayout>
+            <TextView
+                    android:id="@+id/cardDesc"
+                    android:textSize="18sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="24dp"/>
+
+            <TextView
+                    android:id="@+id/cardImageLabel"
+                    android:text="@string/card_img_label"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"/>
+
+            <ImageView
+                    android:id="@+id/cardImageView"
+                    android:adjustViewBounds="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
