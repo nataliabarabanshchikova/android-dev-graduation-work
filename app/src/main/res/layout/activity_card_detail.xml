@@ -21,7 +21,8 @@
                     android:textColor="?android:attr/textColorSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"/>
+                    android:paddingBottom="4dp"
+                    android:visibility="gone"/>
 
             <TextView
                     android:id="@+id/cardName"
@@ -29,7 +30,8 @@
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="24dp"/>
+                    android:paddingBottom="24dp"
+                    android:visibility="gone"/>
 
             <TextView
                     android:id="@+id/cardDescLabel"
@@ -38,7 +40,8 @@
                     android:textColor="?android:attr/textColorSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"/>
+                    android:paddingBottom="4dp"
+                    android:visibility="gone"/>
 
             <TextView
                     android:id="@+id/cardDesc"
@@ -46,7 +49,8 @@
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="24dp"/>
+                    android:paddingBottom="24dp"
+                    android:visibility="gone"/>
 
             <TextView
                     android:id="@+id/cardImageLabel"
@@ -55,13 +59,15 @@
                     android:textColor="?android:attr/textColorSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"/>
+                    android:paddingBottom="8dp"
+                    android:visibility="gone"/>
 
             <ImageView
                     android:id="@+id/cardImageView"
                     android:adjustViewBounds="true"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"/>
 
         </LinearLayout>
 

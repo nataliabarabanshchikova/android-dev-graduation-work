@@ -72,20 +72,21 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
 
     private fun updateUI() {
         findViewById<TextView>(R.id.cardName).text = currCard!!.name
+        findViewById<TextView>(R.id.cardName).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.cardNameLabel).visibility = View.VISIBLE
 
-        if (currCard!!.desc.isEmpty()) {
-            findViewById<TextView>(R.id.cardDesc).visibility = View.GONE
-            findViewById<TextView>(R.id.cardDescLabel).visibility = View.GONE
-        } else
+        if (!currCard!!.desc.isEmpty()) {
             findViewById<TextView>(R.id.cardDesc).text = currCard!!.desc
+            findViewById<TextView>(R.id.cardDesc).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.cardDescLabel).visibility = View.VISIBLE
+        }
 
         if (!currCard!!.attachments.isEmpty()) {
             val imageView =findViewById<ImageView>(R.id.cardImageView)
             val imageUrl = currCard!!.attachments[0].url
             Glide.with(this).load(imageUrl).into(imageView)
-        } else {
-            findViewById<ImageView>(R.id.cardImageView).visibility = View.GONE;
-            findViewById<TextView>(R.id.cardImageLabel).visibility = View.GONE;
+            findViewById<ImageView>(R.id.cardImageView).visibility = View.VISIBLE;
+            findViewById<TextView>(R.id.cardImageLabel).visibility = View.VISIBLE;
         }
     }
 
