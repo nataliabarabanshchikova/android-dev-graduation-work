@@ -1,6 +1,8 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
@@ -58,6 +60,10 @@ class AddCardActivity : AppCompatActivity(), CoroutineScope {
         val response: String = withContext(Dispatchers.IO) {
             httpClient.newCall(request).execute().body()!!.string()
         }
+
+        val intentUpdateUI = "mobiledevcourse.nataliabarabanshchikova.graduationwork.action.UPDATE_UI"
+        val broadcaster = LocalBroadcastManager.getInstance(this@AddCardActivity)
+        broadcaster.sendBroadcast(Intent(intentUpdateUI))
         finish()
     }
 

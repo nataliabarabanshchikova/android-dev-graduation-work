@@ -31,7 +31,7 @@ class PageFragment : Fragment(), CoroutineScope {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_lists, container, false)
-        val listId = getArguments()!!.getString(LIST_ID)
+        val listId = arguments!!.getString(LIST_ID)
 
         val btnNewCard = view.findViewById<FloatingActionButton>(R.id.fab)
         btnNewCard.setOnClickListener {
@@ -60,7 +60,7 @@ class PageFragment : Fragment(), CoroutineScope {
             val fragment = PageFragment()
             val args = Bundle()
             args.putString(LIST_ID, listId)
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }

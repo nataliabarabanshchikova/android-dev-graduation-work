@@ -1,8 +1,12 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
@@ -26,9 +30,12 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + rootJob
 
+    private lateinit var receiverUpdateUI: BroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_board_detail)
+        println("onCreate")
 
         val intent = getIntent()
         val boardId = if (intent.hasExtra("boardId")) intent.getStringExtra("boardId") else ""
@@ -50,6 +57,19 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
             allLists = savedInstanceState.get("allLists") as ArrayList<List>
             updateUI()
         }
+
+        receiverUpdateUI = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                println("onCreate onReceive")
+                loadData(boardId)
+            }
+        }
+        val intentFilter = IntentFilter()
+        val intentUpdateUI = "mobiledevcourse.nataliabarabanshchikova.graduationwork.action.UPDATE_UI"
+        intentFilter.addAction(intentUpdateUI)
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiverUpdateUI, intentFilter)
+
+        print("onCreate register receiver")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -91,6 +111,7 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
 
     override fun onDestroy() {
         rootJob.cancel()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiverUpdateUI);
         super.onDestroy()
     }
 }
