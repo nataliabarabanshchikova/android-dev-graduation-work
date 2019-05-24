@@ -7,11 +7,11 @@
         <item
                 android:id="@+id/nav_boards"
                 android:icon="@drawable/ic_menu_boards"
-                android:title="Boards"/>
+                android:title="Opened boards"/>
         <item
                 android:id="@+id/nav_close_boards"
                 android:icon="@drawable/ic_menu_close_boards"
-                android:title="Close boards"/>
+                android:title="Closed boards"/>
     </group>
 
     <item android:title="User">

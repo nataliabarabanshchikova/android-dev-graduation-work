@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun updateUI() {
         adapter.data.clear()
-        adapter.data.addAll(allBoards)
+        adapter.data.addAll(allBoards.filter { s -> s.closed == false })
         adapter.notifyDataSetChanged()
     }
 
@@ -161,8 +161,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_boards -> {
+                supportActionBar!!.title = getString(R.string.title_activity_main_opened_boards)
+                adapter.data.clear()
+                adapter.data.addAll(allBoards.filter { s -> s.closed == false })
+                adapter.notifyDataSetChanged()
             }
             R.id.nav_close_boards -> {
+                supportActionBar!!.title = getString(R.string.title_activity_main_closed_boards)
+                adapter.data.clear()
+                adapter.data.addAll(allBoards.filter { s -> s.closed == true })
+                adapter.notifyDataSetChanged()
             }
         }
 
