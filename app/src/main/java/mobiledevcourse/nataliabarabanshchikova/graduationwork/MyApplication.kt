@@ -15,6 +15,5 @@ class MyApplication : Application() {
         prefs!!.apiKey = apiKey
         prefs!!.apiToken = apiToken
         super.onCreate()
-        println("MyApplication onCreate")
     }
 }

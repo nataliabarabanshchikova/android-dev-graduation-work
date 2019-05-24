@@ -28,9 +28,10 @@ class BoardAdapter (val clickListener: (Board) -> Unit): RecyclerView.Adapter<Bo
         else
             p0.itemView.findViewById<TextView>(R.id.boardDesc).text = data[p1].desc
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm");
-        val date = dateFormat.format(data[p1].dateLastActivity)
-        p0.itemView.findViewById<TextView>(R.id.boardCreated).text = date
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        val date = dateFormat.format(data[p1].dateLastActivity)
+//        p0.itemView.findViewById<TextView>(R.id.boardCreated).text = date
+        p0.itemView.findViewById<TextView>(R.id.boardCreated).visibility = View.GONE
 
         (p0 as ViewHolder).bind(data[p1], clickListener)
     }
