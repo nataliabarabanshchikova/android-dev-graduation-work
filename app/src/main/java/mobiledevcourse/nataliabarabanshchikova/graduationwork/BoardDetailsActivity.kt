@@ -1,11 +1,15 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
@@ -45,11 +49,20 @@ class BoardDetailsActivity : AppCompatActivity(), CoroutineScope {
         tabs.setupWithViewPager(view_pager)
 
         if(savedInstanceState == null || !savedInstanceState.containsKey("allLists")) {
-            loadData(boardId)
+            if (hasInternetConn(this))
+                loadData(boardId)
+            else
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
         } else {
             allLists = savedInstanceState.get("allLists") as ArrayList<List>
             updateUI()
         }
+    }
+
+    private fun hasInternetConn(context: Context) : Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 
     override fun onSupportNavigateUp(): Boolean {

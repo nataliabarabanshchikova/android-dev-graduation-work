@@ -1,6 +1,9 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -10,6 +13,7 @@ import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
@@ -45,13 +49,22 @@ class PageFragment : Fragment(), CoroutineScope {
         cardList.adapter = adapter
 
         if(savedInstanceState == null || !savedInstanceState.containsKey("allCards")) {
-            loadData(listId)
+            if (hasInternetConn(context))
+                loadData(listId)
+            else
+                Toast.makeText(context, "No internet connection", Toast.LENGTH_LONG).show()
         } else {
             allCards = savedInstanceState.get("allCards") as ArrayList<Card>
             updateUI()
         }
 
         return view
+    }
+
+    private fun hasInternetConn(context: Context?) : Boolean {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 
     companion object {

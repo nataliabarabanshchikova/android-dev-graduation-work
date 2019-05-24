@@ -1,11 +1,15 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -36,13 +40,20 @@ class CardActivity : AppCompatActivity(), CoroutineScope {
         val cardId = if (intent.hasExtra("id")) intent.getStringExtra("id") else ""
 
         if(savedInstanceState == null || !savedInstanceState.containsKey("currCard")) {
-            loadData(cardId)
+            if (hasInternetConn(this))
+                loadData(cardId)
+            else
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
         } else {
             currCard = savedInstanceState.get("currCard") as CardDetail
             updateUI()
         }
+    }
 
-        loadData(cardId)
+    private fun hasInternetConn(context: Context) : Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 
     override fun onSupportNavigateUp(): Boolean {

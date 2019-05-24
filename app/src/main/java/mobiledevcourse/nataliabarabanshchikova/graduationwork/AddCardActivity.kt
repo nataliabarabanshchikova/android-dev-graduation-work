@@ -1,9 +1,13 @@
 package mobiledevcourse.nataliabarabanshchikova.graduationwork
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import kotlinx.coroutines.*
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -30,10 +34,19 @@ class AddCardActivity : AppCompatActivity(), CoroutineScope {
 
         val btnAddCard = findViewById<Button>(R.id.btnAddCard)
         btnAddCard.setOnClickListener {
-            val newCardName = findViewById<EditText>(R.id.cardName).text.toString()
-            val newCardDesc = findViewById<EditText>(R.id.cardDesc).text.toString()
-            addCard(listId, newCardName, newCardDesc)
+            if (hasInternetConn(this)) {
+                val newCardName = findViewById<EditText>(R.id.cardName).text.toString()
+                val newCardDesc = findViewById<EditText>(R.id.cardDesc).text.toString()
+                addCard(listId, newCardName, newCardDesc)
+            } else
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun hasInternetConn(context: Context) : Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 
     override fun onSupportNavigateUp(): Boolean {
